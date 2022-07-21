@@ -32,28 +32,35 @@ function wfmwidget_block() {
 	wp_register_script( 'wfmwidget-cookie', plugins_url( 'block/jquery.cookie.js', __FILE__ ) );
 	wp_register_script( 'wfmwidget-hoverIntent', plugins_url( 'block/jquery.hoverIntent.minified.js', __FILE__ ) );
 	wp_register_script( 'wfmwidget-accordion', plugins_url( 'block/jquery.accordion.js', __FILE__ ) );
-	wp_register_script( 'wfmwidget-main', plugins_url( 'block/wfmwidget-main.js', __FILE__ ), array( 'jquery', 'wfmwidget-cookie', 'wfmwidget-hoverIntent', 'wfmwidget-accordion' ) );
+	wp_register_script( 'wfmwidget-main', plugins_url( 'block/wfmwidget-main.js', __FILE__ ), array(
+		'jquery',
+		'wfmwidget-cookie',
+		'wfmwidget-hoverIntent',
+		'wfmwidget-accordion'
+	) );
 
 	wp_register_style( 'wfmwidget-block-editor', plugins_url( 'block/editor.css', __FILE__ ) );
 	wp_register_style( 'wfmwidget-block-style', plugins_url( 'block/style.css', __FILE__ ) );
 
 	register_block_type( 'wfmwidget-block/block', array(
-		'editor_script' => 'wfmwidget-block',
-		'editor_style'  => 'wfmwidget-block-editor',
-		'style'         => 'wfmwidget-block-style',
-		'script'         => 'wfmwidget-main',
+		'editor_script'   => 'wfmwidget-block',
+		'editor_style'    => 'wfmwidget-block-editor',
+		'style'           => 'wfmwidget-block-style',
+		'script'          => 'wfmwidget-main',
 		'render_callback' => 'wfmwidget_block_cb',
 	) );
 }
 
 function wfmwidget_block_cb( $block_attributes, $content ) {
+	$class = empty( $block_attributes['className'] ) ? '' : esc_html( $block_attributes['className'] );
 	$categories = wp_list_categories( array(
-		'echo' => false,
+		'echo'     => false,
 		'title_li' => '',
 	) );
-	$html = '<ul class="wfmcats-accordion">';
-	$html .= $categories;
-	$html .= '</ul>';
+	$html       = '<ul class="wfmcats-accordion ' . $class . '">';
+	$html       .= $categories;
+	$html       .= '</ul>';
+
 	return $html;
 }
 
