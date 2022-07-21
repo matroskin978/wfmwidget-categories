@@ -1,0 +1,3 @@
+ul.wfmcats-accordion li a.active:not(.dcjq-parent) {
+    background-color: #fff;
+}
